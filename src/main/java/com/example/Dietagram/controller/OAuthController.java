@@ -22,9 +22,7 @@ public class OAuthController {
     @GetMapping("/loginInfo")
     public ResponseEntity<?> oauthLoginInfo(Authentication authentication){
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        System.out.println("getprincipal = "+authentication.getPrincipal());
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        System.out.println("nickcname =  "+attributes);
         User user = userService.getUserFromRepo((String)attributes.get("name")+(String) attributes.get("email"));
         return ResponseEntity.ok().body(user);
     }

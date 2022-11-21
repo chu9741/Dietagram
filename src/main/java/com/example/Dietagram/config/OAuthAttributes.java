@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 public enum OAuthAttributes {
     NAVER("naver", (attributes) -> {
+        //noinspection unchecked
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         System.out.println("@@@@@@@@response = " + response);
         UserProfile userProfile = new UserProfile();
@@ -18,9 +19,9 @@ public enum OAuthAttributes {
     }),
 
     KAKAO("kakao", (attributes) -> {
-        // kakao는 kakao_account에 유저정보가 있다. (email)
+        //noinspection unchecked
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
+        //noinspection unchecked
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
         System.out.println("@@@@@@@@response = " + kakaoProfile);
 
