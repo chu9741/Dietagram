@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @GetMapping
-    public ResponseEntity<?> home(){
+    public ResponseEntity<?> home() {
         return ResponseEntity.ok().body("DIETAGRAM");
     }
 }
