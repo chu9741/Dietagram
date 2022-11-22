@@ -13,6 +13,7 @@ public class UserProfile {
     private String email;
     private String provider;
     private String nickname;
+//    private String token;
 
     public User toUser() {
         return User.builder()
@@ -20,6 +21,7 @@ public class UserProfile {
                 .email(email)
                 .provider(provider)
                 .nickname(name+email)
+//                .token(token)
                 .build();
     }
 
