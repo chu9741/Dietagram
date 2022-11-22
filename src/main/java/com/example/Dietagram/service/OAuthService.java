@@ -27,6 +27,9 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TokenProvider tokenProvider;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
@@ -70,6 +73,16 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
                 .orElse(userProfile.toUser());
 
         return userRepository.save(user);
+    }
+
+    public User setTokenInUser(User user){
+        user.setToken(tokenProvider.create(user));
+        return userRepository.save(user);
+    }
+
+    public User getUserByToken(String token){
+        String id = tokenProvider.validateAndGetUserId(token);
+        return userRepository.findById(Long.parseLong(id)).orElse(null);
     }
 }
 
