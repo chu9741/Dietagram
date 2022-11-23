@@ -2,7 +2,6 @@ package com.example.Dietagram.controller;
 
 import com.example.Dietagram.domain.User;
 import com.example.Dietagram.service.OAuthService;
-import com.example.Dietagram.service.TokenProvider;
 import com.example.Dietagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,9 @@ public class OAuthController {
     public ResponseEntity<?> oauthLoginInfo(Authentication authentication){
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        User user = userService.getUserFromRepo((String)attributes.get("name")+(String) attributes.get("email"));
+        System.out.println("attributes = "+ attributes);
+        System.out.println("oAuthUser = "+ oAuth2User);
+        User user = userService.getUserFromAttributeId(attributes);
         return ResponseEntity.ok().body(oAuthService.setTokenInUser(user));
     }
 }

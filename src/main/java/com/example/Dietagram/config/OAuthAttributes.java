@@ -12,6 +12,7 @@ public enum OAuthAttributes {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         System.out.println("response = " + response);
         UserProfile userProfile = new UserProfile();
+        userProfile.setAttributeId((String) response.get("id"));
         userProfile.setName((String) response.get("name"));
         userProfile.setEmail(((String) response.get("email")));
         userProfile.setNickname((String) response.get("name")+(String) response.get("email"));
@@ -23,10 +24,16 @@ public enum OAuthAttributes {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         //noinspection unchecked
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
+        //noinspection unchecked
+        Long kakaoId =  (Long)attributes.get("id");
         System.out.println("response = " + kakaoProfile);
 
         UserProfile userProfile = new UserProfile();
         userProfile.setName((String) kakaoProfile.get("nickname"));
+//        System.out.println("Attribute = "+ attributes);
+//        System.out.println("kakao ACCOUNT = "+ kakaoAccount);
+//        System.out.println("kakao PROFILE = "+ kakaoProfile);
+        userProfile.setAttributeId(kakaoId.toString());
         userProfile.setEmail((String) kakaoAccount.get("email"));
         userProfile.setNickname((String) kakaoProfile.get("nickname")+(String) kakaoAccount.get("email"));
         return userProfile;

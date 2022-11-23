@@ -1,5 +1,6 @@
 package com.example.Dietagram.domain;
 
+import com.example.Dietagram.dto.UserPrimeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
     private String name;
+    private String attributeId;
     private String email;
     private String provider;
     private String nickname;
@@ -53,4 +55,23 @@ public class User {
         this.nickname= name+email;
         return this;
     }
+
+    public void followUser(User targetUser){
+        this.getFollowingList().add(targetUser.id);
+        targetUser.getFollowerList().add(this.id);
+    }
+
+    public void unfollowUser(User targetUser){
+        this.getFollowingList().remove(targetUser.id);
+        targetUser.getFollowerList().remove(this.id);
+    }
+
+    //=========================================//
+
+    public UserPrimeDTO toPrimeDTO(){
+        return UserPrimeDTO.builder().email(this.email)
+                .gender(this.gender).name(this.name)
+                .nickname(this.nickname).build();
+    }
+
 }

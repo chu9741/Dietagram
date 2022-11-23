@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class UserProfile {
 
+    private String attributeId;
     private String name;
     private String email;
     private String provider;
@@ -21,6 +22,7 @@ public class UserProfile {
                 .email(email)
                 .provider(provider)
                 .nickname(name+email)
+                .attributeId(attributeId)
 //                .token(token)
                 .build();
     }
