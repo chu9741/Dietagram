@@ -1,15 +1,16 @@
 package com.example.Dietagram.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.Dietagram.dto.ResponseFeedCommentDTO;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,5 +28,14 @@ public class FeedComment extends BaseTimeDomain {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feed_id")
     private Feed feedCommentFeed;
+
+
+    public ResponseFeedCommentDTO toResponseDTO(){
+        return ResponseFeedCommentDTO.builder().id(id)
+                .nickname(nickname).content(content)
+                .build();
+    }
+
+
 
 }

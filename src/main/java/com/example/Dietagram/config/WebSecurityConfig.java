@@ -26,7 +26,7 @@ public class WebSecurityConfig {
         .logout().logoutSuccessUrl("/")
         .and()
         .oauth2Login()
-        .defaultSuccessUrl("/oauth/loginInfo", true) // Feed창으로 이동?
+        .defaultSuccessUrl("http://localhost:3000/login/oauth2/code/kakao") // Feed창으로 이동?
         .userInfoEndpoint()
         .userService(oAuthService);
 

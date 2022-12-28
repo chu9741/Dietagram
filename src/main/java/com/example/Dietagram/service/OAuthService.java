@@ -4,6 +4,7 @@ package com.example.Dietagram.service;
 import com.example.Dietagram.config.OAuthAttributes;
 import com.example.Dietagram.config.UserProfile;
 import com.example.Dietagram.domain.User;
+import com.example.Dietagram.dto.LoginDTO;
 import com.example.Dietagram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -75,7 +77,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         return userRepository.save(user);
     }
 
-    public User setTokenInUser(User user){
+    public User setTokenInUser(User user) throws UnsupportedEncodingException {
         user.setToken(tokenProvider.create(user));
         return userRepository.save(user);
     }
@@ -84,5 +86,22 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         String id = tokenProvider.validateAndGetUserId(token);
         return userRepository.findById(Long.parseLong(id)).orElse(null);
     }
+
+    public User getUserByAttributeId(String attributeId){
+        return userRepository.findByAttributeId(attributeId);
+    }
+
+
+    public User createUserFromLoginDTO(LoginDTO loginDTO){
+        User newUser = User.builder().attributeId(loginDTO.getId())
+                .nickname(loginDTO.getNickname()+loginDTO.getId())
+                .build();
+        userRepository.save(newUser);
+
+        return userRepository.findByAttributeId(loginDTO.getId());
+    }
+
+
+
 }
 

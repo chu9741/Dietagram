@@ -76,6 +76,28 @@ public class UserService {
         return "failed";
     }
 
+    public List<UserPrimeDTO> getFollowingList(User user){
+        List<UserPrimeDTO> userPrimeDTOList = new ArrayList<>();
+        for(long followingId : user.getFollowingList()){
+            User temp = getUserById(Long.toString(followingId));
+            UserPrimeDTO dto = temp.toPrimeDTO();
+            userPrimeDTOList.add(dto);
+        }
+        return userPrimeDTOList;
+    }
+
+    public List<UserPrimeDTO> getFollowerList(User user){
+        List<UserPrimeDTO> userPrimeDTOList = new ArrayList<>();
+        for(long followerId : user.getFollowerList()){
+            User temp = getUserById(Long.toString(followerId));
+            UserPrimeDTO dto = temp.toPrimeDTO();
+            userPrimeDTOList.add(dto);
+        }
+        return userPrimeDTOList;
+    }
+
+
+
     public List<UserPrimeDTO> searchUser(String keyword){
         List<User> userListByKeyword = userRepository.findByNicknameContainingIgnoreCase(keyword);
         List<UserPrimeDTO> userPrimeDTOList = new ArrayList<>();
@@ -87,7 +109,5 @@ public class UserService {
             }
         return userPrimeDTOList;
     }
-
-
 
 }

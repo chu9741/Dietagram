@@ -1,16 +1,16 @@
 package com.example.Dietagram.domain;
 
 import com.example.Dietagram.dto.UserPrimeDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,12 +41,12 @@ public class User {
 
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "following_username")
+    @Column(name = "following_userid")
     private List<Long> followingList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "follower_username")
+    @Column(name = "follower_userid")
     private List<Long> followerList = new ArrayList<>();
 
     public User update(String name, String email) {
@@ -69,7 +69,7 @@ public class User {
     //=========================================//
 
     public UserPrimeDTO toPrimeDTO(){
-        return UserPrimeDTO.builder().email(this.email)
+        return UserPrimeDTO.builder().id(id).email(this.email)
                 .gender(this.gender).name(this.name)
                 .nickname(this.nickname).build();
     }

@@ -30,9 +30,6 @@ public enum OAuthAttributes {
 
         UserProfile userProfile = new UserProfile();
         userProfile.setName((String) kakaoProfile.get("nickname"));
-//        System.out.println("Attribute = "+ attributes);
-//        System.out.println("kakao ACCOUNT = "+ kakaoAccount);
-//        System.out.println("kakao PROFILE = "+ kakaoProfile);
         userProfile.setAttributeId(kakaoId.toString());
         userProfile.setEmail((String) kakaoAccount.get("email"));
         userProfile.setNickname((String) kakaoProfile.get("nickname")+(String) kakaoAccount.get("email"));
